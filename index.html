@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="wor-highlighter" content="IE=edge">
+      <meta name="veiwport" content="width=device-width, inticial-scal=1.0">
+      <title>Word Highlighter</title>
+      <link rel="stylesheet" href="styles.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+       <style>
+            #paragraph-input {
+            border: 2px solid rgb(150, 0, 0);
+            width: 400px;
+            height: 300px;
+            padding: 8px 16px;
+            overflow: scroll;
+        }
+
+        .highlighted-txt {
+            color: rgb(0, 0, 0);
+            background-color: rgb(241, 255, 45);
+        }
+        </style>
+    </head>
+    <body>
+        <div id="main">
+          <label for="paragraph-input">Enter paragraph here</label>
+          <div id="paragraph-input" contenteditable="true">Enter text here</div>
+          <br />
+          <br />
+          <div>Total matches:- <span id="words-counter">0</span></div>
+          <br />
+          <label for="word-input">Enter word to be higlighted here</label>
+          <input type="text" id="word-input" oninput = "onhandler()">
+          <br />
+          <br />
+          <label for="ignore-case">Ignore case?</label>
+          <input type="checkbox" id="ignore-case" />
+          </div>
+          
+    <script>
+      function onhandler(){
+    const word = document.querySelector("#word-input");
+    const para = document.querySelector("#paragraph-input");
+    const counter = document.querySelector("#words-counter");
+    const checkbox = document.querySelector("#ignore-case");
+    let newparaText = '';
+    let count = 0;
+    if(!word.value) return ;
+    if(checkbox.checked == true){
+        let result = new RegExp(word.value ,'ig');
+        newparaText = para.innerText.replaceAll(result, (section) =>{
+            count++;
+            return `<span class="highlighted-txt">${section}</span>` 
+        });
+    }
+    if(checkbox.checked == false){
+        newparaText = para.innerText.replaceAll(word.value,(section)=>{
+            count++;
+            return `<span class="highlighted-txt">${section}</span>` 
+       
+        })
+    }
+    para.innerHTML= newparaText;
+    counter.innerText=count;
+}
+      
+    </script>
+    </body>
+</html>
